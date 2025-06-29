@@ -1,0 +1,71 @@
+[gd_scene load_steps=10 format=3 uid="uid://dn5w6rmxqux1t"]
+
+[ext_resource type="Script" uid="uid://cboc7xwxguc4m" path="res://Characters/BaseCharacterTemplate/Scripts/Character.gd" id="1_3o6rd"]
+[ext_resource type="PackedScene" uid="uid://c38klf8nht1ed" path="res://Characters/BaseCharacterTemplate/Model/POLY_SONIC.tscn" id="1_lfgsg"]
+
+[sub_resource type="Environment" id="Environment_lfgsg"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ccr6o"]
+
+[sub_resource type="Compositor" id="Compositor_lfgsg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ccr6o"]
+albedo_color = Color(0.242309, 0.717126, 5.77569e-07, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ccr6o"]
+size = Vector3(11.8884, 0.575073, 12.2133)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lfgsg"]
+radius = 0.2873
+height = 1.23585
+
+[sub_resource type="Environment" id="Environment_3o6rd"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_lfgsg")
+camera_attributes = SubResource("CameraAttributesPractical_ccr6o")
+compositor = SubResource("Compositor_lfgsg")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 6, 0)
+light_energy = 3.378
+directional_shadow_mode = 0
+directional_shadow_fade_start = 0.88
+directional_shadow_max_distance = 101.5
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D"]
+transform = Transform3D(2.05485, 0, 0, 0, 1, 0, 0, 0, 2.53929, 0.291543, -0.107818, -0.120904)
+cast_shadow = 0
+ignore_occlusion_culling = true
+size = Vector3(11.8472, 0.135742, 12.1964)
+material = SubResource("StandardMaterial3D_ccr6o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(2.05485, 0, 0, 0, 1, 0, 0, 0, 2.53929, 0.27577, -0.320282, -0.113659)
+shape = SubResource("BoxShape3D_ccr6o")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.70221, -0.0739393, -2.46285)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+script = ExtResource("1_3o6rd")
+
+[node name="POLY_SONIC" parent="CharacterBody3D" instance=ExtResource("1_lfgsg")]
+transform = Transform3D(0.146191, 0, 0, 0, 0.146191, 0, 0, 0, 0.146191, -0.0396248, 0.00233235, 0.0240775)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00752866, 0.597362, 0)
+shape = SubResource("CapsuleShape3D_lfgsg")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, -0.988274, 0.152693, 0, -0.152693, -0.988274, 0, 0.870583, -0.0318514)
+spring_length = 2.5
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/SpringArm3D"]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0, 0)
+environment = SubResource("Environment_3o6rd")
+current = true
