@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://br3w6bhiql852"]
+
+[ext_resource type="Script" uid="uid://cboc7xwxguc4m" path="res://Characters/BaseCharacterTemplate/Scripts/Character.gd" id="1_h4gy7"]
+[ext_resource type="PackedScene" uid="uid://c38klf8nht1ed" path="res://Characters/BaseCharacterTemplate/Model/POLY_SONIC.tscn" id="2_0i1hq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lfgsg"]
+radius = 0.2873
+height = 1.23585
+
+[sub_resource type="Environment" id="Environment_3o6rd"]
+
+[node name="Character" type="CharacterBody3D"]
+script = ExtResource("1_h4gy7")
+
+[node name="POLY_SONIC" parent="." instance=ExtResource("2_0i1hq")]
+transform = Transform3D(0.146191, 0, 0, 0, 0.146191, 0, 0, 0, 0.146191, -0.0396248, 0.00233235, 0.0240775)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00752866, 0.597362, 0)
+shape = SubResource("CapsuleShape3D_lfgsg")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, 8.74228e-08, 1.59e-15, 8.60393e-08, 0.984174, 0.177205, 1.54918e-08, 0.177205, -0.984174, 0, 1.57523, -2.68175)
+environment = SubResource("Environment_3o6rd")
+current = true
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.988274, 0.152693, 0, -0.152693, -0.988274, 0, 0.870583, -0.0318514)
+spring_length = 2.5
+
+[node name="GroundRaycast" type="RayCast3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1.597, 0, 0, 0, 5, 0, 0, 0, 1.597, 0, 0, 0)
+debug_shape_custom_color = Color(1, 1, 1, 1)
+debug_shape_thickness = 5
+
+[node name="AngleRaycast" type="RayCast3D" parent="."]
+unique_name_in_owner = true
+hit_back_faces = false
+debug_shape_custom_color = Color(0.780311, 0.163917, 0, 1)
