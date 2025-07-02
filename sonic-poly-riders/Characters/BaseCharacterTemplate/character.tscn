@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://br3w6bhiql852"]
+[gd_scene load_steps=7 format=3 uid="uid://br3w6bhiql852"]
 
 [ext_resource type="Script" uid="uid://cboc7xwxguc4m" path="res://Characters/BaseCharacterTemplate/Scripts/Character.gd" id="1_h4gy7"]
 [ext_resource type="PackedScene" uid="uid://c38klf8nht1ed" path="res://Characters/BaseCharacterTemplate/Model/POLY_SONIC.tscn" id="2_0i1hq"]
@@ -8,6 +8,16 @@ radius = 0.2873
 height = 1.23585
 
 [sub_resource type="Environment" id="Environment_3o6rd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h4gy7"]
+shading_mode = 0
+proximity_fade_distance = 0.01
+distance_fade_mode = 3
+distance_fade_max_distance = 3.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_0i1hq"]
+material = SubResource("StandardMaterial3D_h4gy7")
+size = Vector3(0.05, 0.05, 0.05)
 
 [node name="Character" type="CharacterBody3D"]
 script = ExtResource("1_h4gy7")
@@ -31,6 +41,8 @@ spring_length = 2.5
 [node name="GroundRaycast" type="RayCast3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1.597, 0, 0, 0, 5, 0, 0, 0, 1.597, 0, 0, 0)
+hit_from_inside = true
+hit_back_faces = false
 debug_shape_custom_color = Color(1, 1, 1, 1)
 debug_shape_thickness = 5
 
@@ -38,3 +50,20 @@ debug_shape_thickness = 5
 unique_name_in_owner = true
 hit_back_faces = false
 debug_shape_custom_color = Color(0.780311, 0.163917, 0, 1)
+
+[node name="DriftParticles" type="CPUParticles3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.504165)
+emitting = false
+amount = 10
+lifetime = 0.69
+explosiveness = 0.14
+randomness = 0.3
+lifetime_randomness = 0.07
+mesh = SubResource("BoxMesh_0i1hq")
+particle_flag_rotate_y = true
+flatness = 0.2
+gravity = Vector3(0, 0, -9.8)
+angle_max = 720.0
+scale_amount_min = 0.0
+scale_amount_max = 2.0
