@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dn5w6rmxqux1t"]
+[gd_scene load_steps=10 format=3 uid="uid://dn5w6rmxqux1t"]
 
 [ext_resource type="PackedScene" uid="uid://br3w6bhiql852" path="res://Characters/BaseCharacterTemplate/character.tscn" id="1_lfgsg"]
 
@@ -12,12 +12,15 @@
 albedo_color = Color(0.242309, 0.717126, 5.77569e-07, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ccr6o"]
-size = Vector3(11.8884, 0.575073, 12.2133)
+size = Vector3(33.5666, 0.575073, 12.2133)
 
 [sub_resource type="PrismMesh" id="PrismMesh_lfgsg"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lfgsg"]
 points = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_lfgsg"]
+data = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [node name="Node3D" type="Node3D"]
 
@@ -36,14 +39,14 @@ directional_shadow_max_distance = 101.5
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D"]
-transform = Transform3D(2.05485, 0, 0, 0, 1, 0, 0, 0, 2.53929, 0.291543, -0.107818, -0.120904)
+transform = Transform3D(2.05485, 0, 0, 0, 1, 0, 0, 0, 2.53929, -2.00318, -0.107818, -0.120904)
 cast_shadow = 0
 ignore_occlusion_culling = true
-size = Vector3(11.8472, 0.135742, 12.1964)
+size = Vector3(33.0242, 0.135742, 12.1964)
 material = SubResource("StandardMaterial3D_ccr6o")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(2.05485, 0, 0, 0, 1, 0, 0, 0, 2.53929, 0.27577, -0.320282, -0.113659)
+transform = Transform3D(2.05485, 0, 0, 0, 1, 0, 0, 0, 2.53929, -1.39899, -0.320282, -0.113659)
 shape = SubResource("BoxShape3D_ccr6o")
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="."]
@@ -57,4 +60,16 @@ mesh = SubResource("PrismMesh_lfgsg")
 transform = Transform3D(6.999, 0, 0, 0, 0.987, 0, 0, 0, 4, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_lfgsg")
 
+[node name="StaticBody3D2" type="StaticBody3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.972, 0, -6.219)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2/StaticBody3D2"]
+transform = Transform3D(16.9494, 0, 0, 0, 6.4275, 0, 0, 0, 4, -28.7317, 0, 14.9915)
+mesh = SubResource("PrismMesh_lfgsg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2/StaticBody3D2"]
+transform = Transform3D(16.9494, 0, 0, 0, 6.4275, 0, 0, 0, 4, -28.7317, 0, 14.9915)
+shape = SubResource("ConcavePolygonShape3D_lfgsg")
+
 [node name="Character" parent="." instance=ExtResource("1_lfgsg")]
+deceleration = 30

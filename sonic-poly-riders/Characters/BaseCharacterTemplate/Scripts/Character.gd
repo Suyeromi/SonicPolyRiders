@@ -3,7 +3,7 @@ extends CharacterBody3D
 
 @export_category("Stats")
 @export var current_speed = 0
-@export var turning_speed = 2
+@export var turning_speed = 0.5
 @export var top_speed = 450
 @export var board_top_speed = 900
 @export var speed = 0
@@ -11,26 +11,33 @@ extends CharacterBody3D
 @export var deceleration = 25
 var forward = 0
 var board
+@onready var gravity =  ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var slope_raycast = %AngleRaycast
 var xform : Transform3D
 @onready var ground_raycast = %GroundRaycast
+@onready var drift_particles = %DriftParticles
 
 @onready var CharacterAnimation = $POLY_SONIC/AnimationPlayer
 
 
 func _physics_process(delta: float) -> void:
-	slope_alignment(slope_raycast.get_collision_normal())
+
+
+	
 	if is_on_floor():
-		global_transform = xform
+		slope_alignment(slope_raycast.get_collision_normal())
+		global_transform = global_transform.interpolate_with(xform, 0.2)
+	elif not is_on_floor():
+		global_transform = global_transform.interpolate_with(xform, 0.2)
+		slope_alignment(Vector3.UP)
 	movement(delta)
 	move_and_slide()
 	
-	ground_snap()
+
 	
 	pass
 
 func movement(delta):
-	
 	
 	
 	if Input.is_action_pressed("ui_up"):
@@ -65,9 +72,20 @@ func movement(delta):
 	
 	if Input.is_action_pressed("ui_left"):
 		turning = 1
+		if Input.is_action_pressed("Drift") and board == true:
+			turning_speed = 1.75
+			drift_particles.emitting = true
+		else:
+			turning_speed = 0.5
+			drift_particles.emitting = false
 	if Input.is_action_pressed("ui_right"):
 		turning = -1
-	
+		if Input.is_action_pressed("Drift") and board == true:
+			turning_speed = 1.75
+			drift_particles.emitting = true
+		else:
+			turning_speed = 0.5
+			drift_particles.emitting = false
 	
 	current_speed = (forward * speed) * delta
 	
@@ -84,12 +102,17 @@ func movement(delta):
 	
 	
 	velocity = transform.basis.z * current_speed
+	if not is_on_floor():
+		gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+		velocity += transform.basis.y * -gravity
+	elif is_on_floor():
+		gravity = 0
 	
 	pass
 
 func slope_alignment(floor_normal):
 	
-	xform = global_transform
+	xform = transform
 	
 	xform.basis.y = floor_normal
 	xform.basis.x = -xform.basis.z.cross(floor_normal)
@@ -100,19 +123,5 @@ func slope_alignment(floor_normal):
 	
 	pass
 
-func ground_snap():
-	var hit_point = ground_raycast.get_collision_point()
-	var v_distance = global_transform.origin.y - hit_point.y
-	
-	#if ground_raycast.is_colliding():
-		#is_on_floor()
-	
-	if !is_on_floor():
-		global_transform.origin.y = -hit_point.y
-		#global_transform.basis.orthonormalized()
-	#else:
-		#global_transform.basis.orthonormalized()
-	
-	apply_floor_snap()
 	
 	pass
