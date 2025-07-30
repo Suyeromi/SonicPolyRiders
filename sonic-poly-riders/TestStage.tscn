@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://dn5w6rmxqux1t"]
+[gd_scene load_steps=11 format=3 uid="uid://dn5w6rmxqux1t"]
 
 [ext_resource type="PackedScene" uid="uid://br3w6bhiql852" path="res://Characters/BaseCharacterTemplate/character.tscn" id="1_lfgsg"]
+[ext_resource type="PackedScene" uid="uid://b2ps6wfm153d6" path="res://SPEEDSTAR.blend" id="2_3o6rd"]
 
 [sub_resource type="Environment" id="Environment_lfgsg"]
 
@@ -73,3 +74,6 @@ shape = SubResource("ConcavePolygonShape3D_lfgsg")
 
 [node name="Character" parent="." instance=ExtResource("1_lfgsg")]
 deceleration = 30
+
+[node name="SPEEDSTAR" parent="." instance=ExtResource("2_3o6rd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.1182, 0.875803, -1.25589)

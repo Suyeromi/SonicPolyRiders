@@ -23,7 +23,7 @@ size = Vector3(0.05, 0.05, 0.05)
 script = ExtResource("1_h4gy7")
 
 [node name="POLY_SONIC" parent="." instance=ExtResource("2_0i1hq")]
-transform = Transform3D(0.146191, 0, 0, 0, 0.146191, 0, 0, 0, 0.146191, -0.0396248, 0.00233235, 0.0240775)
+transform = Transform3D(0.146191, 0, 0, 0, 0.146191, 0, 0, 0, 0.146191, -0.0396248, 0.208943, 0.0240775)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00752866, 0.597362, 0)
