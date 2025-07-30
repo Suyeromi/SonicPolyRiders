@@ -21,10 +21,14 @@ var xform : Transform3D
 @onready var CharacterAnimationTree = $POLY_SONIC/AnimationTree
 
 
+func _ready() -> void:
+	#CharacterAnimation.set_blend_time("board_fast", "board_tilt_R", 1.0)
+	pass
+
+
 func _physics_process(delta: float) -> void:
 
 
-	
 	if is_on_floor():
 		slope_alignment(slope_raycast.get_collision_normal())
 		global_transform = global_transform.interpolate_with(xform, 0.2)
@@ -57,7 +61,7 @@ func movement(delta):
 			
 	
 	if current_speed <= 0:
-		CharacterAnimation.play("menu_idle")
+		CharacterAnimation.play("menu_idle", 0, 0.5)
 	
 	if Input.is_action_pressed("Board Mode"):
 		board = true
@@ -66,31 +70,33 @@ func movement(delta):
 		forward = 1
 		speed += acceleration
 		speed = clamp(speed, 0 , board_top_speed)
-		CharacterAnimation.play('board_fast')
+		CharacterAnimation.play('board_fast', 0.5)
 	
 
 	
 	var turning = 0
 	
 	if Input.is_action_pressed("ui_left"):
+		#CharacterAnimation.set_blend_time("board_fast", "board_tilt_L", 1.0)
 		turning = 1
-		CharacterAnimation.play('board_tilt_L')
+		CharacterAnimation.play('board_tilt_L', 1, 0.5)
 		if Input.is_action_pressed("Drift") and board == true:
 			turning_speed = 1.75
 			drift_particles.emitting = true
 			#CharacterAnimation.play('board_drift_L')
-			CharacterAnimation.play("board_drift_L")
+			CharacterAnimation.play("board_drift_L", 0.5, 0.5)
+			
 		else:
 			turning_speed = 0.5
 			drift_particles.emitting = false
 			
 	if Input.is_action_pressed("ui_right"):
 		turning = -1
-		CharacterAnimation.play('board_tilt_R')
+		CharacterAnimation.play('board_tilt_R', 1)
 		if Input.is_action_pressed("Drift") and board == true:
 			turning_speed = 1.75
 			drift_particles.emitting = true
-			CharacterAnimation.play('board_drift_R')
+			CharacterAnimation.play('board_drift_R', 0.5, 0.5)
 		else:
 			turning_speed = 0.5
 			drift_particles.emitting = false
